@@ -42,7 +42,7 @@ var svg = d3.select("#chart-container").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", (height + margin.top + margin.bottom));
 
-
+    var initial_year = 2010;
     var num_years = 10;
     var maintenance_per_year = 2000.0;
     var investments = [];
@@ -52,36 +52,42 @@ var svg = d3.select("#chart-container").append("svg")
 	investments[i] = maintenance_per_year*(num_years - i)/num_years ;
     }
 
+function ConstructSlider(key,initial)
+{
+  return '<span><span class="invtitle">'+(initial_year+key)+'</span><span class="invclass" id="invyear'+key+'">'+initial+'"</span></span>';
+  return '<div>2014<span class="invclass" id="invyear'+key+'">'+initial+'"</span></div>';
+}
 
 $(function() {
 
     // setup graphic sliders
     for(var i = 0; i < num_years; i++) {
-        $( "#investments" ).append( '<span id="invyear'+i+'">'+investments[i]+'"</span>' );	
+        $( "#investments" ).append( ConstructSlider(i,investments[i]) );	
     }
     var k = 0;
-    $( "#investments > span" ).each(function() {
-	// read initial values from markup and remove that
-	var value = parseInt( $( this ).text(), 10 );
-	$( this ).empty().slider({
-	    value: value,
-	    range: "min",
-	    max: 2000.0*2.0,
-	    animate: true,
-	    orientation: "vertical",
-	    change: function(event, ui) { 
-		var str = event.target.id;
-		var i = parseInt(str.slice(7,str.length));
-		investments[i] = ui.value;
+    for(var i = 0; i < num_years; i++) {
+	var ele = $("#invyear"+i)
+	    // read initial values from markup and remove that
+	    var value = parseInt( $( ele ).text(), 10 );
+	    $( ele ).empty().slider({
+		value: value,
+		range: "min",
+		max: 2000.0*2.0,
+		animate: true,
+		orientation: "vertical",
+		change: function(event, ui) { 
+		    var str = event.target.id;
+		    var i = parseInt(str.slice(7,str.length));
+		    investments[i] = ui.value;
 
-		var obj = d3.select("#chart-container").select("svg").remove();
-		svg = d3.select("#chart-container").append("svg")
-		    .attr("width", width + margin.left + margin.right)
-		    .attr("height", (height + margin.top + margin.bottom));
-		createChart(RobsModelOfTechnicalDebt());
-	    } 
+		    var obj = d3.select("#chart-container").select("svg").remove();
+		    svg = d3.select("#chart-container").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", (height + margin.top + margin.bottom));
+		    createChart(RobsModelOfTechnicalDebt());
+		} 
 	});
-    });
+    }
 });
 
 
@@ -93,7 +99,7 @@ function RobsModelOfTechnicalDebt()
     var cur_td = 0.0;
     var roi = 1.0;
 
-    var initial_year = 2010;
+
     var maintenance_per_year = 2000.0;
     var rdata = [];
     var basic_output = 2000.0;
@@ -353,9 +359,22 @@ createChart(RobsModelOfTechnicalDebt());
 
 </section>
 
+
+
 <section>
+
 <div id="investments">
 </div>
+
+<div id="modelinfo">
+<p>A Basic Financial Model</p>
+<p>Initial Year: 2010</p>
+<p>Number of Years: 10</p>
+<p>Basic maintenace costs per year: $2000 (in thousands!)</p>
+<p>Assumed Return-on-Investment in Government Bucks per Dollar input with no Technical Debt: 3.0</p>
+<p>Sliders control each year investment between $0 and $4,000 (in thousands)<p>
+</div>
+
 </section>
 
 <section>

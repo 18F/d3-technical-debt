@@ -27,13 +27,30 @@
 }
 
 #investments > span {
+    margin:10px;
+    float:left; 
+}
+
+.invclass {
     height:120px; 
     float:left; 
-    margin:35px
+    margin:10px;
+}
+
+.invtitle {
+    left:-60px;
+    position: relative;
 }
 
 
 #thanks {
+	width: 1000px; 
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#modelinfo {
 	width: 1000px; 
 	display: block;
 	margin-left: auto;
