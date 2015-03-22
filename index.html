@@ -28,9 +28,46 @@
   </header>
   
   <section class="main">
+
+
 <div id="chart-container">
   <h2>Inputs, Outputs, and
   Technical Debt</h2>
+<div id="investments">
+</div>
+</div>
+
+</section>
+
+
+
+<section>
+
+<div id="modelinfo">
+<p>A Basic Financial Model</p>
+<p>Initial Year: 2010</p>
+<p>Number of Years: 10</p>
+<p>Basic maintenace costs per year: $2000 (in thousands!)</p>
+<p>Assumed Return-on-Investment in Government Bucks per Dollar input with no Technical Debt: 3.0</p>
+<p>Sliders control each year investment between $0 and $4,000 (in thousands)<p>
+</div>
+
+</section>
+
+<section>
+
+<div id="thanks">
+<p></p>
+<p>
+  This model is implemented with D3 starting from code (http://tympanus.net/codrops/2012/08/29/multiple-area-charts-with-d3-js/)
+
+  published by Tyler Craft on CoDrops.  We thank Tyler Craft
+  starting point and CoDrops for publishing with a license that
+  allows us to reuse their work: http://tympanus.net/codrops/licensing/
+</p>
+</div>
+</section>
+</body>
   <script type="text/javascript">
     var margin = {top: 10, right: 40, bottom: 150, left: 60},
 width = 940 - margin.left - margin.right,
@@ -113,11 +150,10 @@ function RobsModelOfTechnicalDebt()
 
 	rdata[i] = {
 	    Year: i+initial_year,
-	    ROI: roi,
-	    GovBucks_Out: roi*basic_input ,
 	    Technical_Debt: cur_td,
-	    Investment_Dollars:
-	    investments[i]}
+	    Value_Output: roi*basic_input,
+	    ROI: roi,
+	}
 	cur_td = cur_td + current_debt;
     }
 
@@ -155,7 +191,7 @@ function createChart(data){
     */
     data.forEach(function(d) {
 	for (var prop in d) {
-	    if (d.hasOwnProperty(prop)) {
+	if (d.hasOwnProperty(prop)) {
 		d[prop] = parseFloat(d[prop]);
 		if (d[prop] > maxDataPoint) {
 		    maxDataPoint = d[prop];
@@ -168,7 +204,7 @@ function createChart(data){
     });
 
 
-    charts.push(new Chart({
+/*    charts.push(new Chart({
 	data: data.slice(),
 	id:
 	0,
@@ -181,67 +217,23 @@ function createChart(data){
 	margin: margin,
 	showBottomAxis: (0 == countries.length - 1)
     }));
+*/
 
 
-    for(var i = 1; i < countriesCount; i++){
+    for(var i = 0; i < countriesCount; i++){
 	charts.push(new Chart({
 	    data: data.slice(),
 	    id: i,
 	    name: countries[i],
 	    width: width,
 	    height: height * (1 / countriesCount),
-	    maxDataPoint: maxDataPoint,
+	    maxDataPoint: (i == 2) ? 5.0 : maxDataPoint,
 	    svg: svg,
 	    margin: margin,
 	    showBottomAxis: (i == countries.length - 1)
 	}));
 
     }
-
-
-
-    /* Let's create the context brush that will 
-       let us zoom and pan the chart */
-    var contextXScale = d3.time.scale()
-	.range([0, contextWidth])
-	.domain(charts[0].xScale.domain());	
-
-    var contextAxis = d3.svg.axis()
-	.scale(contextXScale)
-	.tickSize(contextHeight)
-	.tickPadding(-10)
-	.orient("bottom");
-
-    var contextArea = d3.svg.area()
-	.interpolate("monotone")
-	.x(function(d) { return contextXScale(d.date); })
-	.y0(contextHeight)
-	.y1(0);
-
-    var brush = d3.svg.brush()
-	.x(contextXScale)
-	.on("brush", onBrush);
-
-    var context = svg.append("g")
-	.attr("class","context")
-	.attr("transform", "translate(" + (margin.left + width * .25) + "," + (height + margin.top + chartHeight) + ")");
-
-    context.append("g")
-	.attr("class", "x axis top")
-	.attr("transform", "translate(0,0)")
-	.call(contextAxis)
-
-    context.append("g")
-	.attr("class", "x brush")
-	.call(brush)
-	.selectAll("rect")
-	.attr("y", 0)
-	.attr("height", contextHeight);
-
-    context.append("text")
-	.attr("class","instructions")
-	.attr("transform", "translate(0," + (contextHeight + 20) + ")")
-	.text('Click and drag above to zoom / pan the data');
 
     function onBrush(){
 	/* this will return a date range to pass into the chart object */
@@ -291,11 +283,12 @@ function Chart(options){
       This isn't required - it simply creates a mask. If this wasn't here,
       when we zoom/panned, we'd see the chart go off to the left under the y-axis 
     */
-    this.svg.append("defs").append("clipPath")
+/*    this.svg.append("defs").append("clipPath")
 	.attr("id", "clip-" + this.id)
 	.append("rect")
 	.attr("width", this.width)
 	.attr("height", this.height);
+*/
     /*
       Assign it a class so we can assign a fill color
       And position it on the page
@@ -355,40 +348,5 @@ Chart.prototype.showOnly = function(b){
 createChart(RobsModelOfTechnicalDebt());
 
 </script>
-</div>
 
-</section>
-
-
-
-<section>
-
-<div id="investments">
-</div>
-
-<div id="modelinfo">
-<p>A Basic Financial Model</p>
-<p>Initial Year: 2010</p>
-<p>Number of Years: 10</p>
-<p>Basic maintenace costs per year: $2000 (in thousands!)</p>
-<p>Assumed Return-on-Investment in Government Bucks per Dollar input with no Technical Debt: 3.0</p>
-<p>Sliders control each year investment between $0 and $4,000 (in thousands)<p>
-</div>
-
-</section>
-
-<section>
-
-<div id="thanks">
-<p></p>
-<p>
-  This model is implemented with D3 starting from code (http://tympanus.net/codrops/2012/08/29/multiple-area-charts-with-d3-js/)
-
-  published by Tyler Craft on CoDrops.  We thank Tyler Craft
-  starting point and CoDrops for publishing with a license that
-  allows us to reuse their work: http://tympanus.net/codrops/licensing/
-</p>
-</div>
-</section>
-</body>
 </html>
