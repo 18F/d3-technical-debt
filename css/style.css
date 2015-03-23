@@ -19,11 +19,14 @@
 }
 
 #investments {
-	width: 1000px; 
-	margin-left: auto;
-	margin-right: auto;
-	height: 200px;
+	width: 940px; 
+	height: 150px;
+	margin-left: 50px;
 	background: rgba(255,255,255,0.5);
+}
+
+#inv_scale {
+	float: left;
 }
 
 #investments > span {
@@ -34,7 +37,7 @@
 .invclass {
     height:120px; 
     float:left; 
-    margin:10px;
+    margin:12px;
 }
 
 .invtitle {
