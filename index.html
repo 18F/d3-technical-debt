@@ -196,6 +196,8 @@ function createChart(data){
 	d.Year = new Date(d.Year,0,1);
     });
 
+    var mycolors = [ "rgb(34,135,141)", "rgb(188,57,58)", "rgb(137,153,56)" ];
+
     for(var i = 0; i < countriesCount; i++){
 	charts.push(new Chart({
 	    data: data.slice(),
@@ -203,6 +205,7 @@ function createChart(data){
 	    name: countries[i],
 	    width: width,
 	    height: height * (1 / countriesCount),
+            color: mycolors[i],
 
 // This is pretty ugly way to handle the ROI, as an exception...
 // I've hacked this up so much this is really ugly.
@@ -268,6 +271,7 @@ function Chart(options){
 	.data([this.chartData])
 	.attr("class", "chart")
 	.attr("clip-path", "url(#clip-" + this.id + ")")
+        .style("fill",function(d) { return options.color;})
 	.attr("d", this.area);
 
     this.xAxisTop = d3.svg.axis().scale(this.xScale).orient("bottom");
@@ -293,6 +297,7 @@ function Chart(options){
     this.chartContainer.append("g")
 	.attr("class", "y axis")
 	.attr("transform", "translate(-15,0)")
+        .style("fill",function(d) { return this.color;})
 	.call(this.yAxis);
 
     this.chartContainer.append("text")
