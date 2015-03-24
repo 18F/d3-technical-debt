@@ -291,20 +291,21 @@ function Chart(options){
     this.xAxisTop = d3.svg.axis().scale(this.xScale).orient("bottom");
     this.xAxisBottom = d3.svg.axis().scale(this.xScale).orient("top");
     /* We only want a top axis if it's the first country */
-    if(this.id == 0){
+/*    if(this.id == 0){
 	this.chartContainer.append("g")
 	    .attr("class", "x axis top")
 	    .attr("transform", "translate(0,0)")
 	    .call(this.xAxisTop);
     }
+*/
 
     /* Only want a bottom axis on the last country */
-    if(this.showBottomAxis){
+//    if(this.showBottomAxis){
 	this.chartContainer.append("g")
 	    .attr("class", "x axis bottom")
 	    .attr("transform", "translate(0," + this.height + ")")
 	    .call(this.xAxisBottom);
-    }  
+//    }  
 
     this.yAxis = d3.svg.axis().scale(this.yScale).orient("left").ticks(5);
 

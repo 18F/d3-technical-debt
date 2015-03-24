@@ -34,6 +34,7 @@
 
 #inv_scale {
         margin-top: 10px;
+	margin-right: 10px;
 	float: left;
 }
 
@@ -46,7 +47,7 @@
 }
 
 #highnumber {
-	   margin-top: 20px;
+	   margin-top: 0px;
 }
 
 #investments > span {
@@ -62,8 +63,8 @@
 
 .invtitle {
     position: relative;
-    left: -20px;
-    top: -30px;
+    left: -35px;
+    top: -20px;
 }
 
 
