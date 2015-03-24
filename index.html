@@ -21,32 +21,28 @@
     <body>
 <div class="container">
   
-  <header>
-  
-  <h1><strong>A Model of Technical Debt</strong></h1>
-  
-  </header>
   
   <section class="main">
 
-
-<div id="chart-container">
-  <h2>Inputs, Outputs, and
-  Technical Debt</h2>
+ <div id="chart-container">
+  <h1><strong>A Model of Technical Debt</strong></h1>
+  <h3>Adjust Investment Dollars Sliders to Explore How Technical Debt Works</h3>
+<p>
+</p>
 <div id="investments">
 <div id="inv_scale">
-<p>
+<div id="highnumber">
 $4000
-</p>
-<p>
+</div>
+<div id="midnumber">
 $2000
-</p>
-<p>
+</div>
+<div id="lownumber">
 $0
-</p>
 </div>
 </div>
-<div>Investment Dollars</div>
+</div>
+<div id="invdollars">Investment Dollars Sliders</div>
 </div>
 
 </section>
@@ -56,7 +52,7 @@ $0
 <section>
 
 <div id="modelinfo">
-<p>A Basic Financial Model</p>
+<h2>A Basic Financial Model</h2>
 <p>Initial Year: 2010</p>
 <p>Number of Years: 10</p>
 <p>Basic maintenace costs per year: $2000 (in thousands!)</p>
@@ -69,13 +65,18 @@ $0
 <section>
 
 <div id="thanks">
-<p></p>
+<h2>Thanks</h2>
 <p>
-  This model is implemented with D3 starting from code (http://tympanus.net/codrops/2012/08/29/multiple-area-charts-with-d3-js/)
-
-  published by Tyler Craft on CoDrops.  We thank Tyler Craft
+  This model is implemented with D3 starting from code (<a href="http://tympanus.net/codrops/2012/08/29/multiple-area-charts-with-d3-js/">http://tympanus.net/codrops/2012/08/29/multiple-area-charts-with-d3-js/</a>)
+  published by Tyler Craft on CoDrops.  
+</p>
+<p>
+We thank Tyler Craft
   starting point and CoDrops for publishing with a license that
-  allows us to reuse their work: http://tympanus.net/codrops/licensing/
+  allows us to reuse their work: <a href="http://tympanus.net/codrops/licensing/">http://tympanus.net/codrops/licensing/</a>
+</p>
+<p>
+The design of this page was greatly improved by Michelle Hertzfeld.
 </p>
 </div>
 </section>
@@ -157,8 +158,8 @@ function RobsModelOfTechnicalDebt()
 
 	rdata[i] = {
 	    Year: i+initial_year,
-	    Technical_Debt: cur_td,
-	    Value_Output: roi*basic_input,
+	    'Value Output': roi*basic_input,
+	    'Technical Debt': cur_td,
 	    ROI: roi,
 	}
 	cur_td = cur_td + current_debt;
@@ -276,7 +277,8 @@ function Chart(options){
 
     this.chartContainer = svg.append("g")
 	.attr('class',this.name.toLowerCase())
-	.attr("transform", "translate(" + this.margin.left + "," + (this.margin.top + (this.height * this.id) + (10 * this.id)) + ")");
+		     
+	.attr("transform", "translate(" + this.margin.left + "," + (this.margin.top + (this.height * this.id) + (30 * this.id)) + ")");
 
     /* We've created everything, let's actually add it to the page */
     this.chartContainer.append("path")

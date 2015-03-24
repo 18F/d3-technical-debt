@@ -1,12 +1,18 @@
-@import url('normalize.css');
-@import url('demo.css');
-
 #chart-container {
-	width: 1000px; 
+/*	width: 1000px; 
 	margin: 0 auto 50px auto;
 	background: rgba(255,255,255,0.5);
 	box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+*/
 	padding: 20px 30px;
+
+}
+
+#invdollars {
+       margin-left: auto;
+       margin-right: auto;
+       margin-bottom: 30px;
+       width: 20%;
 }
 
 #chart-container h2 {
@@ -21,12 +27,26 @@
 #investments {
 	width: 940px; 
 	height: 150px;
-	margin-left: 50px;
+	margin-left: 0px;
+	margin-top: 40px;
 	background: rgba(255,255,255,0.5);
 }
 
 #inv_scale {
+        margin-top: 10px;
 	float: left;
+}
+
+#lownumber {
+	   margin-top: 30px;
+}
+
+#midnumber {
+	   margin-top: 30px;
+}
+
+#highnumber {
+	   margin-top: 20px;
 }
 
 #investments > span {
@@ -37,12 +57,13 @@
 .invclass {
     height:120px; 
     float:left; 
-    margin:12px;
+    margin: 10px;
 }
 
 .invtitle {
-    left:-60px;
     position: relative;
+    left: -20px;
+    top: -30px;
 }
 
 
@@ -51,6 +72,7 @@
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+	padding: 20px;
 }
 
 #modelinfo {
@@ -58,6 +80,8 @@
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+	background: rgba(230,230,230,0.5);
+	padding: 20px;
 }
 
 
