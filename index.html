@@ -20,13 +20,11 @@
     </head>
     <body>
 <div class="container">
-  
-  
   <section class="main">
 
  <div id="chart-container">
-  <h1><strong>A Model of Technical Debt</strong></h1>
-  <h3>Adjust Investment Dollars Sliders to Explore How Technical Debt Works</h3>
+  <h1>A Model of Technical Debt</h1>
+  <h2>Adjust Investment Dollars to Explore How Technical Debt Works</h2>
 <p>
 </p>
 <div id="investments">
@@ -42,9 +40,6 @@ $0
 </div>
 </div>
 </div>
-<div id="invdollars">Investment Dollars Sliders</div>
-</div>
-
 </section>
 
 
@@ -80,6 +75,8 @@ The design of this page was greatly improved by Michelle Hertzfeld.
 </p>
 </div>
 </section>
+</div>
+
 </body>
   <script type="text/javascript">
     var margin = {top: 10, right: 40, bottom: 150, left: 60},
@@ -163,6 +160,9 @@ function RobsModelOfTechnicalDebt()
 	    ROI: roi,
 	}
 	cur_td = cur_td + current_debt;
+        /* we choose not to have a model in which technical debt can
+	    be negative. */
+        cur_td = Math.max(0,cur_td);
     }
 
     return rdata;
@@ -209,7 +209,13 @@ function createChart(data){
 	d.Year = new Date(d.Year,0,1);
     });
 
-    var mycolors = [ "rgb(34,135,141)", "rgb(188,57,58)", "rgb(137,153,56)" ];
+// Test: I don't really want the maxDataPoint to change in this application
+    maxDataPoint = 6000.0;
+
+    var mycolors = [ "rgb(34,135,141)", "rgb(188,57,58)",
+    "rgb(137,153,56)" ];
+
+    var maxScalePoints = [ 3000.0, 6000.0, 5.0 ];
 
     for(var i = 0; i < countriesCount; i++){
 	charts.push(new Chart({
@@ -222,7 +228,7 @@ function createChart(data){
 
 // This is pretty ugly way to handle the ROI, as an exception...
 // I've hacked this up so much this is really ugly.
-	    maxDataPoint: (i == 2) ? 5.0 : maxDataPoint,
+	    maxDataPoint: maxScalePoints[i],
 	    svg: svg,
 	    margin: margin,
 	    showBottomAxis: (i == countries.length - 1)
@@ -286,6 +292,7 @@ function Chart(options){
 	.attr("class", "chart")
 	.attr("clip-path", "url(#clip-" + this.id + ")")
         .style("fill",function(d) { return options.color;})
+        .style("fill-opacity",function(d) { return 0.7; })
 	.attr("d", this.area);
 
     this.xAxisTop = d3.svg.axis().scale(this.xScale).orient("bottom");
@@ -301,10 +308,12 @@ function Chart(options){
 
     /* Only want a bottom axis on the last country */
 //    if(this.showBottomAxis){
+/*
 	this.chartContainer.append("g")
 	    .attr("class", "x axis bottom")
 	    .attr("transform", "translate(0," + this.height + ")")
 	    .call(this.xAxisBottom);
+*/
 //    }  
 
     this.yAxis = d3.svg.axis().scale(this.yScale).orient("left").ticks(5);
